@@ -1,23 +1,44 @@
 import styled from "styled-components";
-import Header from "../components/Header";
+import MainHeader from "../components/header/MainHeader";
 import SearchBox from "../components/SearchBox";
-import Item from "../components/Item";
+import ListItem from "../components/ListItem";
+import Filter from "../components/Filter";
 
 const Wrapper = styled.div`
     max-width: 768px;
     width: 100%;
+    background-color: #ffffff;
+`;
+
+const Container = styled.div`
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const ItemContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const Home = () => {
     return (
-        <Wrapper>
-            <Header />
-            <SearchBox />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-        </Wrapper>
+        <>
+            <MainHeader />
+            <Wrapper>
+                <Container>
+                    <SearchBox />
+                    <Filter />
+                </Container>
+                <ItemContainer>
+                    <ListItem />
+                    <ListItem />
+                    <ListItem />
+                    <ListItem />
+                </ItemContainer>
+            </Wrapper>
+        </>
     );
 };
 

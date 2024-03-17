@@ -6,10 +6,11 @@ const SearchForm = styled.form`
     width: 100%;
     display: flex;
     align-items: center;
+    position: relative;
     img {
+        cursor: pointer;
         position: absolute;
-        top: 130px;
-        right: 40px;
+        right: 36px;
     }
 `;
 
@@ -20,7 +21,7 @@ const Input = styled.input`
     background-color: #ffffff;
     border: 1px solid #d9d9d9;
     border-radius: 10px;
-    margin: 0px 20px;
+    margin: 20px 20px;
     padding: 15px 15px;
     background-color: transparent;
     width: 100%;
@@ -42,6 +43,10 @@ const SearchInput = () => {
         if (keyword === "") return;
         navigate(`/search-result/${keyword}`);
     };
+    const onClickIcon = () => {
+        if (keyword === "") return;
+        navigate(`/search-result/${keyword}`);
+    };
     return (
         <SearchForm onSubmit={handleSubmit}>
             <Input
@@ -55,6 +60,7 @@ const SearchInput = () => {
                 src="/svg/search.svg"
                 height="20"
                 width="auto"
+                onClick={onClickIcon}
             />
         </SearchForm>
     );

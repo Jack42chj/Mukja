@@ -1,22 +1,16 @@
 import styled from "styled-components";
 import SearchInput from "../components/SearchInput";
-import { useNavigate } from "react-router-dom";
 import KeywordTag from "../components/KeywordTag";
+import SearchHeader from "../components/header/SearchHeader";
 
 const Wrapper = styled.div`
     max-width: 768px;
     width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 20px;
-`;
-
-const Header = styled.div`
-    display: flex;
-    align-items: center;
     background-color: #ffffff;
-    height: 50px;
-    padding: 0px 20px;
 `;
 
 const Typography = styled.div`
@@ -27,25 +21,20 @@ const Typography = styled.div`
         font-size: 1rem;
         font-weight: normal;
     }
+    margin-top: 20px;
 `;
 
 const Search = () => {
-    const navigate = useNavigate();
     return (
-        <Wrapper>
-            <Header onClick={() => navigate("/")}>
-                <img
-                    alt="chevron-left-icon"
-                    src="/svg/chevron-left.svg"
-                    height="20"
-                    width="auto"
-                />
-            </Header>
-            <Typography>무엇이 먹고 싶나요?</Typography>
-            <SearchInput />
-            <Typography className="keyword">인기 검색어</Typography>
-            <KeywordTag />
-        </Wrapper>
+        <>
+            <SearchHeader />
+            <Wrapper>
+                <Typography>무엇이 먹고 싶나요?</Typography>
+                <SearchInput />
+                <Typography className="keyword">인기 검색어</Typography>
+                <KeywordTag />
+            </Wrapper>
+        </>
     );
 };
 

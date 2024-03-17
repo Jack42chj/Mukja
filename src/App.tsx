@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import SearchResult from "./pages/SearchResult";
 import Detail from "./pages/Detail";
+import MapSetting from "./pages/MapSetting";
 
 const router = createBrowserRouter([
     {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     {
         path: "/search",
         element: <Search />,
+    },
+    {
+        path: "/map-setting",
+        element: <MapSetting />,
     },
     {
         path: "/search-result/:keyword",
@@ -31,7 +36,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    background-color: #ffffff;
+    background-color: #f2f2f2;
     font-family: 'Pretendard';
   }
 `;
@@ -39,7 +44,8 @@ const GlobalStyles = createGlobalStyle`
 const Wrapper = styled.div`
     height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const App = () => {

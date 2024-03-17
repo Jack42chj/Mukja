@@ -6,7 +6,7 @@ const Bar = styled.div`
     background-color: #ffffff;
     border: 1px solid #d9d9d9;
     border-radius: 10px;
-    margin: 10px 20px;
+    margin: 0px 20px;
     padding: 15px 15px;
     width: 70%;
     display: flex;

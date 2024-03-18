@@ -8,9 +8,16 @@ const SearchForm = styled.form`
     align-items: center;
     position: relative;
     img {
-        cursor: pointer;
-        position: absolute;
-        right: 36px;
+        &.search {
+            cursor: pointer;
+            position: absolute;
+            right: 36px;
+        }
+        &.cancle {
+            cursor: pointer;
+            position: absolute;
+            right: 64px;
+        }
     }
 `;
 
@@ -23,12 +30,12 @@ const Input = styled.input`
     border-radius: 10px;
     margin: 20px 20px;
     padding: 15px 15px;
-    background-color: transparent;
     width: 100%;
     outline: none;
     border-radius: 10px;
     &:focus {
         border: 1px solid #065fd4;
+        background-color: #f1f1f1;
     }
 `;
 
@@ -47,6 +54,9 @@ const SearchInput = () => {
         if (keyword === "") return;
         navigate(`/search-result/${keyword}`);
     };
+    const onClickCancle = () => {
+        setKeyword("");
+    };
     return (
         <SearchForm onSubmit={handleSubmit}>
             <Input
@@ -56,12 +66,23 @@ const SearchInput = () => {
                 value={keyword}
             />
             <img
+                className="search"
                 alt="search-icon"
                 src="/svg/search.svg"
                 height="20"
                 width="auto"
                 onClick={onClickIcon}
             />
+            {keyword !== "" && (
+                <img
+                    className="cancle"
+                    alt="cancle-icon"
+                    src="/svg/cancle.svg"
+                    height="20"
+                    width="auto"
+                    onClick={onClickCancle}
+                />
+            )}
         </SearchForm>
     );
 };

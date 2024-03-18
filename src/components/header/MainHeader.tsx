@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LocationModal from "../LocationModal";
+import { useState } from "react";
+import LocStore from "../../zustand/store";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -28,16 +31,28 @@ const Item = styled.div`
     display: flex;
     align-items: center;
     font-weight: bold;
+    gap: 5px;
 `;
 
 const MainHeader = () => {
     const navigate = useNavigate();
+    const [isOpen, setOpen] = useState(false);
+    const openModal = () => setOpen(true);
+    const closeModal = () => setOpen(false);
+    const { address } = LocStore();
     return (
         <Wrapper>
             <Container>
-                <Item onClick={() => navigate("/")}>먹깨비</Item>
-                <Item onClick={() => navigate("/map-setting")}>
-                    노원구 월계동
+                <Item onClick={() => navigate("/")}>
+                    <img
+                        alt="logo-icon"
+                        src="/svg/logo.svg"
+                        height="36"
+                        width="auto"
+                    />
+                </Item>
+                <Item onClick={openModal}>
+                    {address}
                     <img
                         alt="chevron-down-icon"
                         src="/svg/chevron-down.svg"
@@ -54,6 +69,7 @@ const MainHeader = () => {
                     />
                 </Item>
             </Container>
+            <LocationModal isOpen={isOpen} closeModal={closeModal} />
         </Wrapper>
     );
 };

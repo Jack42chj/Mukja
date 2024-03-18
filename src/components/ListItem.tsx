@@ -23,13 +23,16 @@ const Wrapper = styled.div`
 `;
 
 const ItemImage = styled.div`
-    height: 224px;
+    height: 180px;
     width: 100%;
     max-width: 390px;
     background-color: #d9d9d9;
     border: none;
     border-radius: 10px;
     position: relative;
+    @media (min-width: 628px) {
+        height: 224px;
+    }
 `;
 
 const IconWrapper = styled.div`
@@ -122,7 +125,7 @@ const ListItem = () => {
                         />
                         <div>99</div>
                     </Subtitle>
-                    <DetailText>자세히 보기</DetailText>
+                    <DetailText>상세보기</DetailText>
                 </DescWrapper>
             </Wrapper>
         </Box>

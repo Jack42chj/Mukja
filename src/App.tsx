@@ -39,6 +39,9 @@ const GlobalStyles = createGlobalStyle`
     background-color: #f2f2f2;
     font-family: 'Pretendard';
   }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Wrapper = styled.div`

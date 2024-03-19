@@ -1,104 +1,119 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MapHeader from "../components/header/MapHeader";
+import LocStore from "../zustand/store";
+import { useNavigate } from "react-router-dom";
 
 const Kakao = styled.div`
     width: 100%;
-    height: 84vh;
+    height: 92.4vh;
 `;
 
 const Wrapper = styled.div`
     max-width: 768px;
     width: 100%;
     background-color: #ffffff;
+    position: relative;
 `;
 
-const Location = styled.div`
+const Container = styled.div`
+    z-index: 1;
+    position: absolute;
     display: flex;
-    align-items: center;
-    padding: 12px 10px;
-    border-bottom: 1px solid #d9d9d9;
-    color: #696969;
-    margin: 5px 0px;
-`;
-
-const LocationIcon = styled.div`
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-`;
-
-const Search = styled.input`
-    border: none;
-    outline: none;
-    font-family: "Pretendard";
-    font-size: 1rem;
-    padding: 10px 10px;
+    flex-direction: column;
+    padding: 20px;
+    bottom: 0;
+    background-color: #ffffff;
+    max-width: 768px;
     width: 100%;
+    height: 160px;
+    border-top: 1px solid #d9d9d9;
+    gap: 14px;
 `;
 
 const SettingBtn = styled.span`
     cursor: pointer;
     border: none;
-    background-color: #5467f5;
+    background-color: #5a5a5a;
     color: #ffffff;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 16px 18px;
+    text-align: center;
+`;
+
+const CurrentBtn = styled.span`
+    cursor: pointer;
+    border: none;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #ffffff;
+    border-radius: 100%;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 80px;
+    right: 10px;
+    bottom: 180px;
     z-index: 1;
 `;
 
+const Item = styled.div`
+    font-size: 1.2rem;
+    font-weight: bold;
+    &.street {
+        font-size: 0.9rem;
+        font-weight: normal;
+    }
+`;
+
 const MapSetting = () => {
-    const [word, setWord] = useState("");
-    const [region, setRegion] = useState("종로구 종로 1가");
+    const navigate = useNavigate();
+    const { setAddress, setLocation, address, location } = LocStore();
+    const [region, setRegion] = useState(address);
+    const [road, setRoad] = useState("");
+    const [street, setStreet] = useState("");
     const [map, setMap] = useState<kakao.maps.Map | null>(null);
     const [marker, setMarker] = useState<kakao.maps.Marker | null>(null);
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setWord(e.target.value);
-    };
+
     useEffect(() => {
         const kakao = window.kakao;
         kakao.maps.load(() => {
-            var container = document.getElementById("map");
-            var options = {
-                center: new kakao.maps.LatLng(
-                    37.570227990912244,
-                    126.98315081716676
-                ),
-                level: 4,
-            };
-            var newMap = new kakao.maps.Map(container, options);
-            setMap(newMap);
-            let markerPosition = new kakao.maps.LatLng(
-                37.570227990912244,
-                126.98315081716676
-            );
-            let newMarker = new kakao.maps.Marker({
-                position: markerPosition,
-            });
-            newMarker.setMap(newMap);
-            setMarker(newMarker);
-            kakao.maps.event.addListener(newMap, "center_changed", function () {
-                var center = newMap.getCenter();
-                newMarker.setPosition(center);
-                getAddressFromCoordinate(center);
-            });
-            // var ps = new kakao.maps.services.Places();
-
-            // ps.keywordSearch(word, placesSearchCB);
-
-            // function placesSearchCB(data: any, status: any) {
-            //     if (status === kakao.maps.services.Status.OK) {
-            //         let bounds = new kakao.maps.LatLngBounds();
-            //         bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
-            //         newMap.setBounds(bounds);
-            //         console.log(data[0].y, data[0].x);
-            //     }
-            // }
+            let container = document.getElementById("map");
+            if (container) {
+                let options = {
+                    center: new kakao.maps.LatLng(location[0], location[1]),
+                    level: 4,
+                };
+                let newMap = new kakao.maps.Map(container, options);
+                getAddressFromCoordinate(newMap.getCenter());
+                setMap(newMap);
+                let markerUrl = "/svg/marker.svg";
+                let markerSize = new kakao.maps.Size(32, 36);
+                let markerImage = new kakao.maps.MarkerImage(
+                    markerUrl,
+                    markerSize
+                );
+                let markerPosition = new kakao.maps.LatLng(
+                    location[0],
+                    location[1]
+                );
+                let newMarker = new kakao.maps.Marker({
+                    position: markerPosition,
+                    image: markerImage,
+                });
+                setMarker(newMarker);
+                newMarker.setMap(newMap);
+                kakao.maps.event.addListener(
+                    newMap,
+                    "center_changed",
+                    function () {
+                        var center = newMap.getCenter();
+                        newMarker.setPosition(center);
+                        getAddressFromCoordinate(center);
+                    }
+                );
+            }
         });
     }, []);
 
@@ -110,10 +125,21 @@ const MapSetting = () => {
             (result: any, status: any) => {
                 if (status === window.kakao.maps.services.Status.OK) {
                     const address = result[0].address;
+                    const road_address = result[0].road_address;
                     const name =
                         address.region_2depth_name +
                         " " +
                         address.region_3depth_name;
+                    if (road_address) {
+                        const road_name =
+                            road_address?.region_2depth_name +
+                            " " +
+                            road_address?.road_name +
+                            " " +
+                            road_address?.main_building_no;
+                        setRoad(road_name);
+                    }
+                    setStreet("[지번] " + address.address_name);
                     setRegion(name);
                 }
             }
@@ -121,10 +147,23 @@ const MapSetting = () => {
     };
 
     const onClickBtn = () => {
+        if (map) {
+            const center = map.getCenter();
+            setLocation([center.getLat(), center.getLng()]);
+            setAddress(region);
+            navigate("/");
+        }
+    };
+
+    const onClickCurrBtn = () => {
         if (map && marker) {
-            let bounds = new window.kakao.maps.LatLngBounds();
-            bounds.extend(marker.getPosition());
-            map.setBounds(bounds);
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                const center = new kakao.maps.LatLng(latitude, longitude);
+                map.setCenter(center);
+                marker.setPosition(center);
+                getAddressFromCoordinate(center);
+            });
         }
     };
 
@@ -132,25 +171,22 @@ const MapSetting = () => {
         <>
             <MapHeader />
             <Wrapper>
-                <Location>
-                    <LocationIcon>
-                        <img
-                            alt="location-icon"
-                            src="/svg/location.svg"
-                            height="16"
-                            width="auto"
-                        />
-                    </LocationIcon>
-                    {region}
-                </Location>
-                <Search
-                    placeholder="검색"
-                    type="text"
-                    value={word}
-                    onChange={onChange}
-                />
                 <Kakao id="map" />
-                <SettingBtn onClick={onClickBtn}>위치 설정</SettingBtn>
+                <Container>
+                    <Item>{road}</Item>
+                    <Item className="street">{street}</Item>
+                    <SettingBtn onClick={onClickBtn}>
+                        선택한 위치로 설정하기
+                    </SettingBtn>
+                </Container>
+                <CurrentBtn onClick={onClickCurrBtn}>
+                    <img
+                        alt="location-icon"
+                        src="/svg/location.svg"
+                        height="20"
+                        width="auto"
+                    />
+                </CurrentBtn>
             </Wrapper>
         </>
     );

@@ -34,7 +34,11 @@ const KeywordTag = () => {
             {dummy.map((item) => (
                 <Tag
                     key={item.name}
-                    onClick={() => navigate(`/search-result/${item.name}`)}
+                    onClick={() =>
+                        navigate(`/search-result/${item.name}`, {
+                            state: item.name,
+                        })
+                    }
                 >
                     {item.name}
                 </Tag>

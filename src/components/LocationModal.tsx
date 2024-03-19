@@ -66,7 +66,7 @@ const LocationModal: React.FC<ModalProps> = ({ isOpen, closeModal }) => {
         navigator.geolocation.getCurrentPosition((position) => {
             const { latitude, longitude } = position.coords;
             const geocoder = new window.kakao.maps.services.Geocoder();
-            setLocation([longitude, latitude]);
+            setLocation([latitude, longitude]);
             geocoder.coord2Address(longitude, latitude, (result, status) => {
                 if (status === window.kakao.maps.services.Status.OK) {
                     const address = result[0].address;

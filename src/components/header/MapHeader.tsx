@@ -51,7 +51,7 @@ const MapHeader = () => {
                         width="auto"
                     />
                 </Item>
-                <Item className="name">위치 설정</Item>
+                <Item className="name">지도에서 위치 설정</Item>
             </Container>
         </Wrapper>
     );

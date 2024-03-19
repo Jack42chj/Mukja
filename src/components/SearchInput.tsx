@@ -48,11 +48,11 @@ const SearchInput = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (keyword === "") return;
-        navigate(`/search-result/${keyword}`);
+        navigate(`/search-result/${keyword}`, { state: keyword });
     };
     const onClickIcon = () => {
         if (keyword === "") return;
-        navigate(`/search-result/${keyword}`);
+        navigate(`/search-result/${keyword}`, { state: keyword });
     };
     const onClickCancle = () => {
         setKeyword("");

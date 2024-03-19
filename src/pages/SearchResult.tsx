@@ -3,6 +3,7 @@ import MainHeader from "../components/header/MainHeader";
 import ListItem from "../components/ListItem";
 import Filter from "../components/Filter";
 import SearchInput from "../components/SearchInput";
+import { useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -24,13 +25,14 @@ const Result = styled.div`
 `;
 
 const SearchResult = () => {
+    const keyword = useLocation().state;
     return (
         <>
             <MainHeader />
             <Wrapper>
                 <SearchInput />
                 <Container>
-                    <Result>"치킨" 981개</Result>
+                    <Result>"{keyword}" 981개</Result>
                     <Filter />
                 </Container>
                 <ListItem />

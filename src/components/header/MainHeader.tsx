@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LocationModal from "../LocationModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LocStore from "../../zustand/store";
 
 const Wrapper = styled.div`
@@ -39,7 +39,29 @@ const MainHeader = () => {
     const [isOpen, setOpen] = useState(false);
     const openModal = () => setOpen(true);
     const closeModal = () => setOpen(false);
-    const { address } = LocStore();
+    const { address, setAddress, setLocation } = LocStore();
+    const getCurrentPos = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            const geocoder = new window.kakao.maps.services.Geocoder();
+            setLocation([latitude, longitude]);
+            geocoder.coord2Address(longitude, latitude, (result, status) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                    const address = result[0].address;
+                    const name =
+                        address.region_2depth_name +
+                        " " +
+                        address.region_3depth_name;
+                    setAddress(name);
+                }
+            });
+        });
+    };
+    // useEffect(() => {
+    //     getCurrentPos();
+    //     console.log(1);
+    //     //이 부분은 첫 방문시만 작동하게 만들 필요가 있음
+    // }, []);
     return (
         <Wrapper>
             <Container>

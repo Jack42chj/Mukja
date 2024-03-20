@@ -2,6 +2,7 @@ import styled from "styled-components";
 import SearchInput from "../components/SearchInput";
 import KeywordTag from "../components/KeywordTag";
 import SearchHeader from "../components/header/SearchHeader";
+import TabBar from "../components/TabBar";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -34,6 +35,7 @@ const Search = () => {
                 <Typography className="keyword">인기 검색어</Typography>
                 <KeywordTag />
             </Wrapper>
+            <TabBar />
         </>
     );
 };

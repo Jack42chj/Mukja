@@ -9,6 +9,9 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     display: flex;
     justify-content: center;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
 `;
 
 const Container = styled.div`
@@ -19,10 +22,8 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
-    position: sticky;
     height: 50px;
     padding: 0px 20px;
-    top: 0px;
 `;
 
 const Item = styled.div`
@@ -78,7 +79,7 @@ const MainHeader = () => {
                     <img
                         alt="chevron-down-icon"
                         src="/svg/chevron-down.svg"
-                        height="20"
+                        height="24"
                         width="auto"
                     />
                 </Item>
@@ -86,7 +87,7 @@ const MainHeader = () => {
                     <img
                         alt="user-icon"
                         src="/svg/user.svg"
-                        height="20"
+                        height="24"
                         width="auto"
                     />
                 </Item>

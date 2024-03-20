@@ -34,8 +34,7 @@ const Input = styled.input`
     outline: none;
     border-radius: 10px;
     &:focus {
-        border: 1px solid #065fd4;
-        background-color: #f1f1f1;
+        border: 1px solid #696969;
     }
 `;
 

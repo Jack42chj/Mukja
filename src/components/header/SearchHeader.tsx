@@ -29,11 +29,11 @@ const SearchHeader = () => {
     return (
         <Wrapper>
             <Container>
-                <Item onClick={() => navigate("/")}>
+                <Item onClick={() => navigate(-1)}>
                     <img
                         alt="chevron-left-icon"
                         src="/svg/chevron-left.svg"
-                        height="20"
+                        height="24"
                         width="auto"
                     />
                 </Item>

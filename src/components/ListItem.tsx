@@ -44,7 +44,7 @@ const IconWrapper = styled.div`
     top: 5px;
     right: 5px;
     background-color: #000000;
-    opacity: 0.7;
+    opacity: 0.6;
     padding: 8px 8px;
     border-radius: 100%;
     &:hover {
@@ -94,7 +94,7 @@ const ListItem = () => {
     const navigate = useNavigate();
     return (
         <Box>
-            <Wrapper onClick={() => navigate("/detail")}>
+            <Wrapper onClick={() => navigate("/detail/1")}>
                 <ItemImage>
                     <IconWrapper>
                         <img

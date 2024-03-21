@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 
 const Typography = styled.div`
     padding: 0px 25px;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: bold;
     &.keyword {
         font-size: 1rem;

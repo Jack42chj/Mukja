@@ -35,16 +35,16 @@ const Item = styled.div<ItemProps>`
     gap: 6px;
     font-weight: bold;
     font-size: 0.8rem;
-    color: ${({ active }) => (active === "true" ? "#FFA4B3" : "#9d9d9d")};
+    color: ${({ active }) => (active === "true" ? "#ff005c" : "#a0a0a0")};
     svg {
         height: 24px;
         width: auto;
-        color: ${({ active }) => (active === "true" ? "#FFA4B3" : "#9d9d9d")};
+        color: ${({ active }) => (active === "true" ? "#ff005c" : "#a0a0a0")};
     }
     &:hover {
-        color: #ffa4b3;
+        color: #ff005c;
         svg {
-            color: #ffa4b3;
+            color: #ff005c;
         }
     }
 `;

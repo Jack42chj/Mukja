@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import StarList from "./StarList";
 
 const Wrapper = styled.div`
     display: flex;
@@ -62,6 +63,10 @@ const DescText = styled.div`
         font-weight: bold;
         font-size: 0.9rem;
     }
+    &.content {
+        font-weight: normal;
+        line-height: 1.5;
+    }
 `;
 
 const ReviewText = styled.div`
@@ -83,6 +88,44 @@ const dummy_data = {
         break: "연중무휴",
     },
     phone: "0507-1303-0443",
+    review_count: 199,
+    review_list: [
+        {
+            name: "닭고치",
+            created: "3달전",
+            score: 5,
+            content:
+                "도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요!",
+        },
+        {
+            name: "반반무마니",
+            created: "4달전",
+            score: 4,
+            content:
+                "도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요!",
+        },
+        {
+            name: "닭",
+            created: "3달전",
+            score: 3,
+            content:
+                "도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요!",
+        },
+        {
+            name: "닭꼬치",
+            created: "3달전",
+            score: 2,
+            content:
+                "도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요!",
+        },
+        {
+            name: "닭길치",
+            created: "3달전",
+            score: 1,
+            content:
+                "도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요! 도장이 너무 좋아요. 시설도 깔끔하고 무엇보다 관장님이 너무 좋으세요!",
+        },
+    ],
 };
 
 const DetailInfo = () => {
@@ -146,8 +189,26 @@ const DetailInfo = () => {
                 </ImageContainer>
             </ItemContainer>
             <ItemContainer>
-                <DescText>후기</DescText>
+                <DescText>
+                    후기{" "}
+                    <DescText className="sub">
+                        {dummy_data.review_count}개 리뷰
+                    </DescText>
+                </DescText>
             </ItemContainer>
+            {dummy_data.review_list.map((review) => (
+                <ItemContainer key={review.name}>
+                    <DescText>
+                        {review.name}{" "}
+                        <DescText className="sub">{review.created}</DescText>
+                    </DescText>
+                    <DescText>
+                        <StarList score={review.score} />
+                        {review.score}.0
+                    </DescText>
+                    <DescText className="content">{review.content}</DescText>
+                </ItemContainer>
+            ))}
         </Wrapper>
     );
 };

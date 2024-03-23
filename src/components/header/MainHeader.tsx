@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     justify-content: center;
     position: sticky;
     top: 0px;
-    z-index: 1;
+    z-index: 999;
 `;
 
 const Container = styled.div`

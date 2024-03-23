@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Box = styled.div`
     width: 100%;
     margin-top: 24px;
-    padding-bottom: 10px;
+    padding-bottom: 24px;
     border-bottom: 1px solid #d9d9d9;
 `;
 
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    @media (min-width: 628px) {
+    @media (min-width: 426px) {
         flex-direction: row;
         justify-content: flex-start;
         gap: 20px;
@@ -25,12 +25,11 @@ const Wrapper = styled.div`
 const ItemImage = styled.div`
     height: 180px;
     width: 100%;
-    max-width: 390px;
     background-color: #d9d9d9;
     border: none;
     border-radius: 10px;
     position: relative;
-    @media (min-width: 628px) {
+    @media (min-width: 426px) {
         height: 224px;
     }
 `;
@@ -55,10 +54,10 @@ const IconWrapper = styled.div`
 const DescWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     gap: 10px;
     position: relative;
-    @media (min-width: 628px) {
+    @media (min-width: 426px) {
         margin: 0;
     }
 `;
@@ -85,7 +84,7 @@ const DetailText = styled.div`
     bottom: 5px;
     right: 0;
     display: none;
-    @media (min-width: 628px) {
+    @media (min-width: 426px) {
         display: block;
     }
 `;
@@ -113,14 +112,14 @@ const ListItem = () => {
                         <img
                             alt="star-icon"
                             src="/svg/star.svg"
-                            height="14"
+                            height="16"
                             width="auto"
                         />
                         <div>4.8(99)</div>
                         <img
                             alt="heart-icon"
-                            src="/svg/heart.svg"
-                            height="16"
+                            src="/svg/red-heart.svg"
+                            height="14"
                             width="auto"
                         />
                         <div>99</div>

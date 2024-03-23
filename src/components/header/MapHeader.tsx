@@ -17,8 +17,6 @@ const Container = styled.div`
     justify-content: flex-start;
     height: 50px;
     padding: 0px 20px;
-    position: sticky;
-    top: 0px;
 `;
 
 const Item = styled.div`

@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
     position: fixed;
     bottom: 0;
 `;

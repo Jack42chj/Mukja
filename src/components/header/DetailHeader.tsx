@@ -6,6 +6,10 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     display: flex;
     justify-content: center;
+    border-bottom: 1px solid #d9d9d9;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 `;
 
 const Container = styled.div`

@@ -3,51 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 interface ItemProps {
-    active: string;
+    $active: boolean;
 }
-
-const Wrapper = styled.div`
-    width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    border-top: 1px solid #d9d9d9;
-    position: fixed;
-    bottom: 0;
-`;
-
-const Container = styled.div`
-    max-width: 768px;
-    width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    height: 55px;
-    padding: 0px 20px;
-`;
-
-const Item = styled.div<ItemProps>`
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    font-weight: bold;
-    font-size: 0.8rem;
-    color: ${({ active }) => (active === "true" ? "#ff005c" : "#a0a0a0")};
-    svg {
-        height: 24px;
-        width: auto;
-        color: ${({ active }) => (active === "true" ? "#ff005c" : "#a0a0a0")};
-    }
-    &:hover {
-        color: #ff005c;
-        svg {
-            color: #ff005c;
-        }
-    }
-`;
 
 const pathList = [
     {
@@ -130,7 +87,7 @@ const pathList = [
         name: "미정",
     },
     {
-        path: "/user",
+        path: "/user/1",
         src: (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,6 +108,49 @@ const pathList = [
     },
 ];
 
+const Wrapper = styled.div`
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #d9d9d9;
+    position: fixed;
+    bottom: 0;
+`;
+
+const Container = styled.div`
+    max-width: 768px;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    height: 55px;
+    padding: 0px 20px;
+`;
+
+const Item = styled.div<ItemProps>`
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: ${(props) => (props.$active ? "#ff005c" : "#a0a0a0")};
+    svg {
+        height: 24px;
+        width: auto;
+        color: ${(props) => (props.$active ? "#ff005c" : "#a0a0a0")};
+    }
+    &:hover {
+        color: #ff005c;
+        svg {
+            color: #ff005c;
+        }
+    }
+`;
+
 const TabBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -167,7 +167,7 @@ const TabBar = () => {
                 {pathList.map((item) => (
                     <Item
                         onClick={() => handleTabClick(`${item.path}`)}
-                        active={activeTab === `${item.path}` ? "true" : "false"}
+                        $active={activeTab === item.path}
                         key={item.name}
                     >
                         {item.src}

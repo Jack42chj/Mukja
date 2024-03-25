@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LocationModal from "../LocationModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LocStore from "../../zustand/store";
 
 const Wrapper = styled.div`

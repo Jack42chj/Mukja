@@ -6,7 +6,6 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #d9d9d9;
 `;
 
 const Container = styled.div`
@@ -35,7 +34,7 @@ const Item = styled.div`
     align-items: center;
 `;
 
-const MapHeader = () => {
+const UserHeader = () => {
     const navigate = useNavigate();
     return (
         <Wrapper>
@@ -48,10 +47,10 @@ const MapHeader = () => {
                         width="auto"
                     />
                 </Item>
-                <Item className="name">지도에서 위치 설정</Item>
+                <Item className="name">마이머스트</Item>
             </Container>
         </Wrapper>
     );
 };
 
-export default MapHeader;
+export default UserHeader;

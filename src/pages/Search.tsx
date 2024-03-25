@@ -30,7 +30,7 @@ const Search = () => {
         <>
             <SearchHeader />
             <Wrapper>
-                <Typography>무엇이 먹고 싶나요?</Typography>
+                <Typography>어느 맛집을 가볼까요?</Typography>
                 <SearchInput />
                 <Typography className="keyword">인기 검색어</Typography>
                 <KeywordTag />

@@ -6,6 +6,7 @@ import Search from "./pages/Search";
 import SearchResult from "./pages/SearchResult";
 import Detail from "./pages/Detail";
 import MapSetting from "./pages/MapSetting";
+import User from "./pages/User";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     {
         path: "/detail/:id",
         element: <Detail />,
+    },
+    {
+        path: "/user/:id",
+        element: <User />,
     },
 ]);
 

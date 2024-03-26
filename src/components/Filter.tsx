@@ -36,7 +36,7 @@ const SelectLabel = styled.label`
 const Select = styled.ul`
     z-index: 2;
     position: absolute;
-    top: 60px;
+    top: 50px;
     list-style: none;
     background-color: #ffffff;
     border: 1px solid #d9d9d9;
@@ -52,6 +52,7 @@ const Option = styled.li<OptionProps>`
     color: ${(props) => (props.selected ? "#ff005c" : "inherit")};
     &:hover {
         color: #ff005c;
+        background-color: #f8f8f8;
     }
 `;
 

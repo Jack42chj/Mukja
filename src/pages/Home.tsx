@@ -4,6 +4,10 @@ import SearchBox from "../components/SearchBox";
 import ListItem from "../components/ListItem";
 import Filter from "../components/Filter";
 import TabBar from "../components/TabBar";
+import { supabase } from "../supabase/supabase";
+import { useEffect, useState } from "react";
+import LocStore from "../zustand/store";
+import { ListProps } from "../interface/item-interface";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -21,11 +25,35 @@ const ItemContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
     min-height: 100vh;
 `;
 
 const Home = () => {
+    const [listData, setListData] = useState<ListProps[]>([]);
+    const { address } = LocStore();
+    const getListData = async () => {
+        try {
+            const { data, error } = await supabase
+                .from("matZip")
+                .select(
+                    `id, name, category, address, score, favorite_cnt, review_cnt, image`
+                )
+                .ilike("address", `%${address}%`);
+            if (error) {
+                console.error(error);
+                return;
+            }
+            if (data) {
+                setListData(data);
+            }
+        } catch (err: unknown) {
+            alert("영상 데이터 불러오기 실패!");
+        }
+    };
+    useEffect(() => {
+        getListData();
+    }, []);
     return (
         <>
             <MainHeader />
@@ -35,10 +63,13 @@ const Home = () => {
                     <Filter />
                 </Container>
                 <ItemContainer>
-                    <ListItem />
-                    <ListItem />
-                    <ListItem />
-                    <ListItem />
+                    {listData.length ? (
+                        listData.map((item) => (
+                            <ListItem item={item} key={item.id} />
+                        ))
+                    ) : (
+                        <div>404</div>
+                    )}
                 </ItemContainer>
             </Wrapper>
             <TabBar />

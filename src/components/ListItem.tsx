@@ -1,6 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+interface ListProps {
+    item: {
+        id: string;
+        name: string;
+        category: string;
+        address: string;
+        score: number;
+        favorite_cnt: number;
+        review_cnt: number;
+        image: string;
+    };
+}
+
 const Box = styled.div`
     width: 100%;
     margin-top: 24px;
@@ -22,10 +35,12 @@ const Wrapper = styled.div`
     }
 `;
 
-const ItemImage = styled.div`
+const ItemImage = styled.div<{ url: string }>`
+    background-image: url(${(props) => props.url});
+    background-size: cover;
+    background-position: center center;
     height: 180px;
     width: 100%;
-    background-color: #d9d9d9;
     border: none;
     border-radius: 10px;
     position: relative;
@@ -89,12 +104,12 @@ const DetailText = styled.div`
     }
 `;
 
-const ListItem = () => {
+const ListItem: React.FC<ListProps> = ({ item }) => {
     const navigate = useNavigate();
     return (
         <Box>
-            <Wrapper onClick={() => navigate("/detail/1")}>
-                <ItemImage>
+            <Wrapper onClick={() => navigate(`/detail/${item.id}`)}>
+                <ItemImage url={item.image}>
                     <IconWrapper>
                         <img
                             alt="heart-icon"
@@ -105,9 +120,9 @@ const ListItem = () => {
                     </IconWrapper>
                 </ItemImage>
                 <DescWrapper>
-                    <Subtitle className="sub">치킨</Subtitle>
-                    <Title>치킨플러스 월계점</Title>
-                    <Subtitle>서울시 노원구 월계동 0.8km</Subtitle>
+                    <Subtitle className="sub">{item.category}</Subtitle>
+                    <Title>{item.name}</Title>
+                    <Subtitle>{item.address}</Subtitle>
                     <Subtitle className="sub">
                         <img
                             alt="star-icon"
@@ -115,14 +130,16 @@ const ListItem = () => {
                             height="16"
                             width="auto"
                         />
-                        <div>4.8(99)</div>
+                        <div>
+                            {item.score}({item.review_cnt})
+                        </div>
                         <img
                             alt="heart-icon"
                             src="/svg/red-heart.svg"
                             height="14"
                             width="auto"
                         />
-                        <div>99</div>
+                        <div>{item.favorite_cnt}</div>
                     </Subtitle>
                     <DetailText>상세보기</DetailText>
                 </DescWrapper>

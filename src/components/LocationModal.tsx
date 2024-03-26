@@ -79,6 +79,7 @@ const LocationModal: React.FC<ModalProps> = ({ isOpen, closeModal }) => {
             });
         });
         closeModal();
+        location.reload();
     };
     return (
         <Wrapper

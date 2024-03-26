@@ -2,6 +2,7 @@ import styled from "styled-components";
 import UserHeader from "../components/header/UserHeader";
 import TabBar from "../components/TabBar";
 import UserItem from "../components/UserItem";
+import { useState } from "react";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -23,10 +24,20 @@ const Container = styled.div`
 const AuthItem = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    font-weight: bold;
+    gap: 10px;
+    font-size: 1.2rem;
+`;
+
+const UserInfo = styled.div`
+    &.mail {
+        font-size: 1rem;
+        font-weight: normal;
+    }
 `;
 
 const AuthBtn = styled.div`
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,9 +47,13 @@ const AuthBtn = styled.div`
     height: 44px;
     color: #ff005c;
     margin: 0px 20px;
+    &:hover {
+        background-color: #f8f8f8;
+    }
 `;
 
 const User = () => {
+    const [isLoggedIn, setLogggedIn] = useState(false);
     return (
         <>
             <UserHeader />
@@ -50,9 +65,22 @@ const User = () => {
                         height="56"
                         width="auto"
                     />
-                    <AuthItem>아직 계정이 없으신가요?</AuthItem>
+                    {isLoggedIn ? (
+                        <AuthItem>
+                            <UserInfo>반반무마니</UserInfo>
+                            <UserInfo className="mail">
+                                banban2@gmail.com
+                            </UserInfo>
+                        </AuthItem>
+                    ) : (
+                        <AuthItem>아직 계정이 없으신가요?</AuthItem>
+                    )}
                 </Container>
-                <AuthBtn>로그인하고 시작하기</AuthBtn>
+                {isLoggedIn ? (
+                    <AuthBtn>로그아웃</AuthBtn>
+                ) : (
+                    <AuthBtn>로그인하고 시작하기</AuthBtn>
+                )}
                 <UserItem />
             </Wrapper>
             <TabBar />

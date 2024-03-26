@@ -7,7 +7,7 @@ import TabBar from "../components/TabBar";
 const Wrapper = styled.div`
     max-width: 768px;
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     gap: 20px;

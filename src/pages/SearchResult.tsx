@@ -4,6 +4,9 @@ import ListItem from "../components/ListItem";
 import Filter from "../components/Filter";
 import SearchInput from "../components/SearchInput";
 import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase/supabase";
+import { ListProps } from "../interface/item-interface";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -24,21 +27,60 @@ const Result = styled.div`
     margin-left: 20px;
 `;
 
+const ItemContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+`;
+
 const SearchResult = () => {
     const keyword = useLocation().state;
+    const [listData, setListData] = useState<ListProps[]>([]);
+    const getListData = async () => {
+        try {
+            const { data, error } = await supabase
+                .from("matZip")
+                .select(
+                    `id, name, category, address, score, favorite_cnt, review_cnt, image`
+                )
+                .or(
+                    `name.ilike.%${keyword}%, category.ilike.%${keyword}%, address.ilike.%${keyword}%`
+                );
+            if (error) {
+                console.error(error);
+                return;
+            }
+            if (data) {
+                setListData(data);
+            }
+        } catch (err: unknown) {
+            alert("영상 데이터 불러오기 실패!");
+        }
+    };
+    useEffect(() => {
+        getListData();
+    }, []);
     return (
         <>
             <MainHeader />
             <Wrapper>
                 <SearchInput />
                 <Container>
-                    <Result>"{keyword}" 981개</Result>
+                    <Result>
+                        "{keyword}" {listData.length}개
+                    </Result>
                     <Filter />
                 </Container>
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
+                <ItemContainer>
+                    {listData.length ? (
+                        listData.map((item) => (
+                            <ListItem item={item} key={item.id} />
+                        ))
+                    ) : (
+                        <div>404</div>
+                    )}
+                </ItemContainer>
             </Wrapper>
         </>
     );

@@ -40,12 +40,12 @@ const SearchResult = () => {
     const getListData = async () => {
         try {
             const { data, error } = await supabase
-                .from("matZip")
+                .from("matzip")
                 .select(
-                    `id, name, category, address, score, favorite_cnt, review_cnt, image`
+                    `id, name, category, address, score, like, review_cnt, image`
                 )
                 .or(
-                    `name.ilike.%${keyword}%, category.ilike.%${keyword}%, address.ilike.%${keyword}%`
+                    `name.ilike.%${keyword}%, tag.ilike.%${keyword}%, address.ilike.%${keyword}%`
                 );
             if (error) {
                 console.error(error);
@@ -55,12 +55,12 @@ const SearchResult = () => {
                 setListData(data);
             }
         } catch (err: unknown) {
-            alert("영상 데이터 불러오기 실패!");
+            alert("데이터 불러오기 실패!");
         }
     };
     useEffect(() => {
         getListData();
-    }, []);
+    }, [keyword]);
     return (
         <>
             <MainHeader />

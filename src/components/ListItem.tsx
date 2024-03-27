@@ -8,7 +8,7 @@ interface ListProps {
         category: string;
         address: string;
         score: number;
-        favorite_cnt: number;
+        like: number;
         review_cnt: number;
         image: string;
     };
@@ -108,7 +108,11 @@ const ListItem: React.FC<ListProps> = ({ item }) => {
     const navigate = useNavigate();
     return (
         <Box>
-            <Wrapper onClick={() => navigate(`/detail/${item.id}`)}>
+            <Wrapper
+                onClick={() =>
+                    navigate(`/detail/${item.id}`, { state: item.id })
+                }
+            >
                 <ItemImage url={item.image}>
                     <IconWrapper>
                         <img
@@ -139,7 +143,7 @@ const ListItem: React.FC<ListProps> = ({ item }) => {
                             height="14"
                             width="auto"
                         />
-                        <div>{item.favorite_cnt}</div>
+                        <div>{item.like}</div>
                     </Subtitle>
                     <DetailText>상세보기</DetailText>
                 </DescWrapper>

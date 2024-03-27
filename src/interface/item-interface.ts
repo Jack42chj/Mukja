@@ -5,7 +5,20 @@ export interface ListProps {
     category: string;
     address: string;
     score: number;
-    favorite_cnt: number;
+    like: number;
+    review_cnt: number;
+    image: string;
+}
+
+//상세보기
+export interface DetailProps {
+    id: string;
+    name: string;
+    address: string;
+    description: string;
+    phnum: string;
+    score: number;
+    like: number;
     review_cnt: number;
     image: string;
 }

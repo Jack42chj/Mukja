@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import DetailHeader from "../components/header/DetailHeader";
 import DetailInfo from "../components/DetailInfo";
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase/supabase";
+import { useLocation } from "react-router-dom";
+import { DetailProps } from "../interface/item-interface";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -8,11 +12,13 @@ const Wrapper = styled.div`
     background-color: #ffffff;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ url: string }>`
+    background-image: url(${(props) => props.url});
+    background-size: cover;
+    background-position: center center;
     position: relative;
     width: 100%;
     height: 225px;
-    background-color: #d9d9d9;
     @media (min-width: 628px) {
         height: 448px;
     }
@@ -49,11 +55,35 @@ const HeartIcon = styled.div`
 `;
 
 const Detail = () => {
+    const id = useLocation().state;
+    const [placeData, setPlaceData] = useState<DetailProps[]>([]);
+    const getPlaceData = async () => {
+        try {
+            const { data, error } = await supabase
+                .from("matzip")
+                .select(
+                    `id, name, address, description, score, like, review_cnt, image, phnum`
+                )
+                .eq("id", id);
+            if (error) {
+                console.error(error);
+                return;
+            }
+            if (data) {
+                setPlaceData(data);
+            }
+        } catch (err: unknown) {
+            alert("데이터 불러오기 실패!");
+        }
+    };
+    useEffect(() => {
+        getPlaceData();
+    }, []);
     return (
         <>
             <DetailHeader />
             <Wrapper>
-                <ImageWrapper>
+                <ImageWrapper url={placeData[0]?.image}>
                     <SliderCount>1 / 5</SliderCount>
                     <HeartIcon>
                         <img
@@ -64,7 +94,9 @@ const Detail = () => {
                         />
                     </HeartIcon>
                 </ImageWrapper>
-                <DetailInfo />
+                {placeData.length !== 0 && (
+                    <DetailInfo detailList={placeData[0]} />
+                )}
             </Wrapper>
         </>
     );

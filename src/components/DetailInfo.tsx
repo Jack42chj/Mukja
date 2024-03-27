@@ -1,6 +1,20 @@
 import styled from "styled-components";
 import StarList from "./StarList";
 
+interface detailDataProps {
+    detailList: {
+        id: string;
+        name: string;
+        address: string;
+        description: string;
+        phnum: string;
+        score: number;
+        like: number;
+        review_cnt: number;
+        image: string;
+    };
+}
+
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -26,10 +40,13 @@ const ImageContainer = styled.div`
     gap: 16px;
 `;
 
-const ImageItem = styled.div`
+const ImageItem = styled.div<{ url: string }>`
+    background-image: url(${(props) => props.url});
+    background-size: cover;
+    background-position: center center;
+    cursor: pointer;
     width: 100px;
     height: 100px;
-    background-color: #d9d9d9;
     border-radius: 10px;
     @media (min-width: 496px) {
         width: 148px;
@@ -76,19 +93,11 @@ const ReviewText = styled.div`
 `;
 
 const dummy_data = {
-    title: "치킨플러스 월계점",
-    address: "서울 노원구 석계로13길 35 세양청마루아파트 상가동 1층 101호",
-    description: "후라이드 치킨과 양념치킨이 정말 맛있는 집!",
-    score: 4.9,
-    review: 90,
-    favorite: 189,
     time: {
         week: ["15:20", "01:20"],
         weekend: ["15:20", "01:20"],
         break: "연중무휴",
     },
-    phone: "0507-1303-0443",
-    review_count: 199,
     review_list: [
         {
             name: "닭고치",
@@ -128,13 +137,13 @@ const dummy_data = {
     ],
 };
 
-const DetailInfo = () => {
+const DetailInfo: React.FC<detailDataProps> = ({ detailList }) => {
     return (
         <Wrapper>
             <ItemContainer>
-                <DescText className="desc">{dummy_data.description}</DescText>
-                <DescText className="title">{dummy_data.title}</DescText>
-                <DescText className="sub">{dummy_data.address}</DescText>
+                <DescText className="desc">{detailList.description}</DescText>
+                <DescText className="title">{detailList.name}</DescText>
+                <DescText className="sub">{detailList.address}</DescText>
                 <DescText className="review">
                     <img
                         alt="star-icon"
@@ -142,14 +151,14 @@ const DetailInfo = () => {
                         height="24px"
                         width="auto"
                     />
-                    {dummy_data.score} ({dummy_data.review})
+                    {detailList.score} ({detailList.review_cnt})
                     <img
                         alt="red-heart-icon"
                         src="/svg/red-heart.svg"
                         height="16px"
                         width="auto"
                     />
-                    {dummy_data.favorite}
+                    {detailList.like}
                     <ReviewText>리뷰 보기</ReviewText>
                 </DescText>
             </ItemContainer>
@@ -175,24 +184,24 @@ const DetailInfo = () => {
             </ItemContainer>
             <ItemContainer>
                 <DescText>전화 문의</DescText>
-                <DescText className="sub">{dummy_data.phone}</DescText>
+                <DescText className="sub">{detailList.phnum}</DescText>
             </ItemContainer>
             <ItemContainer>
                 <DescText>사진</DescText>
                 <ImageContainer>
-                    <ImageItem>1</ImageItem>
-                    <ImageItem>2</ImageItem>
-                    <ImageItem>3</ImageItem>
-                    <ImageItem>4</ImageItem>
-                    <ImageItem>5</ImageItem>
-                    <ImageItem>6</ImageItem>
+                    <ImageItem url={detailList.image}>1</ImageItem>
+                    <ImageItem url={detailList.image}>2</ImageItem>
+                    <ImageItem url={detailList.image}>3</ImageItem>
+                    <ImageItem url={detailList.image}>4</ImageItem>
+                    <ImageItem url={detailList.image}>5</ImageItem>
+                    <ImageItem url={detailList.image}>6</ImageItem>
                 </ImageContainer>
             </ItemContainer>
             <ItemContainer>
                 <DescText>
                     후기{" "}
                     <DescText className="sub">
-                        {dummy_data.review_count}개 리뷰
+                        {detailList.review_cnt}개 리뷰
                     </DescText>
                 </DescText>
             </ItemContainer>

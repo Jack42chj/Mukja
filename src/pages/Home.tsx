@@ -35,9 +35,9 @@ const Home = () => {
     const getListData = async () => {
         try {
             const { data, error } = await supabase
-                .from("matZip")
+                .from("matzip")
                 .select(
-                    `id, name, category, address, score, favorite_cnt, review_cnt, image`
+                    `id, name, category, address, score, like, review_cnt, image`
                 )
                 .ilike("address", `%${address}%`);
             if (error) {
@@ -48,7 +48,7 @@ const Home = () => {
                 setListData(data);
             }
         } catch (err: unknown) {
-            alert("영상 데이터 불러오기 실패!");
+            alert("데이터 불러오기 실패!");
         }
     };
     useEffect(() => {

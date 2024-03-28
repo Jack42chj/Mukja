@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/supabase";
 import { ListProps } from "../interface/item-interface";
+import ListSkeleton from "../components/ListSkeleton";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -36,6 +37,7 @@ const ItemContainer = styled.div`
 
 const SearchResult = () => {
     const keyword = useLocation().state;
+    const [isLoading, setLoading] = useState(false);
     const [listData, setListData] = useState<ListProps[]>([]);
     const getListData = async () => {
         try {
@@ -60,6 +62,9 @@ const SearchResult = () => {
     };
     useEffect(() => {
         getListData();
+        setTimeout(() => {
+            setLoading(true);
+        }, 800);
     }, [keyword]);
     return (
         <>
@@ -73,13 +78,13 @@ const SearchResult = () => {
                     <Filter />
                 </Container>
                 <ItemContainer>
-                    {listData.length ? (
-                        listData.map((item) => (
-                            <ListItem item={item} key={item.id} />
-                        ))
-                    ) : (
-                        <div>404</div>
-                    )}
+                    {!isLoading
+                        ? listData.map((_, index) => (
+                              <ListSkeleton key={index} />
+                          ))
+                        : listData.map((item) => (
+                              <ListItem item={item} key={item.id} />
+                          ))}
                 </ItemContainer>
             </Wrapper>
         </>

@@ -8,6 +8,7 @@ import { supabase } from "../supabase/supabase";
 import { useEffect, useState } from "react";
 import LocStore from "../zustand/store";
 import { ListProps } from "../interface/item-interface";
+import ListSkeleton from "../components/ListSkeleton";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -30,6 +31,7 @@ const ItemContainer = styled.div`
 `;
 
 const Home = () => {
+    const [isLoading, setLoading] = useState(false);
     const [listData, setListData] = useState<ListProps[]>([]);
     const { address } = LocStore();
     const getListData = async () => {
@@ -53,6 +55,9 @@ const Home = () => {
     };
     useEffect(() => {
         getListData();
+        setTimeout(() => {
+            setLoading(true);
+        }, 800);
     }, []);
     return (
         <>
@@ -63,13 +68,13 @@ const Home = () => {
                     <Filter />
                 </Container>
                 <ItemContainer>
-                    {listData.length ? (
-                        listData.map((item) => (
-                            <ListItem item={item} key={item.id} />
-                        ))
-                    ) : (
-                        <div>404</div>
-                    )}
+                    {!isLoading
+                        ? listData.map((_, index) => (
+                              <ListSkeleton key={index} />
+                          ))
+                        : listData.map((item) => (
+                              <ListItem item={item} key={item.id} />
+                          ))}
                 </ItemContainer>
             </Wrapper>
             <TabBar />

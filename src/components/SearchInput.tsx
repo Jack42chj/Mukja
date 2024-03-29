@@ -48,10 +48,12 @@ const SearchInput = () => {
         e.preventDefault();
         if (keyword === "") return;
         navigate(`/search-result/${keyword}`, { state: keyword });
+        location.reload();
     };
     const onClickIcon = () => {
         if (keyword === "") return;
         navigate(`/search-result/${keyword}`, { state: keyword });
+        location.reload();
     };
     const onClickCancle = () => {
         setKeyword("");

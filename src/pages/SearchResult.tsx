@@ -4,10 +4,14 @@ import ListItem from "../components/ListItem";
 import Filter from "../components/Filter";
 import SearchInput from "../components/SearchInput";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../supabase/supabase";
 import { ListProps } from "../interface/item-interface";
 import ListSkeleton from "../components/ListSkeleton";
+import EmptyItem from "../components/EmptyItem";
+import { calculateRange, getDistance } from "../util/distance";
+import { useInView } from "react-intersection-observer";
+import LocStore from "../zustand/store";
 
 const Wrapper = styled.div`
     max-width: 768px;
@@ -37,54 +41,86 @@ const ItemContainer = styled.div`
 
 const SearchResult = () => {
     const keyword = useLocation().state;
+    const { location } = LocStore();
+    const [inViewRef, inView] = useInView();
     const [isLoading, setLoading] = useState(false);
-    const [listData, setListData] = useState<ListProps[]>([]);
-    const getListData = async () => {
+    const [nextPage, setNextPage] = useState(true);
+    const [list, setList] = useState<ListProps[]>([]);
+    const latRange = calculateRange(location[0]);
+    const lngRange = calculateRange(location[1]);
+    const page = useRef(1);
+
+    const getList = async () => {
+        setLoading(true);
         try {
             const { data, error } = await supabase
                 .from("matzip")
                 .select(
-                    `id, name, category, address, score, like, review_cnt, image`
+                    `id, name, category, address, score, like, review_cnt, image, lng, lat`
                 )
                 .or(
                     `name.ilike.%${keyword}%, tag.ilike.%${keyword}%, address.ilike.%${keyword}%`
-                );
+                )
+                .order("id")
+                .lte("lat", latRange.max)
+                .gte("lat", latRange.min)
+                .lte("lng", lngRange.max)
+                .gte("lng", lngRange.min)
+                .range((page.current - 1) * 3, page.current * 3 - 1);
             if (error) {
                 console.error(error);
                 return;
             }
             if (data) {
-                setListData(data);
+                const newData = data.map((item) => ({
+                    ...item,
+                    distance: getDistance(
+                        location[0],
+                        location[1],
+                        item.lat,
+                        item.lng
+                    ),
+                }));
+                setList((prev) => [...prev, ...newData]);
+                page.current += 1;
+                if (data.length === 3) setNextPage(true);
+                else setNextPage(false);
             }
         } catch (err: unknown) {
             alert("데이터 불러오기 실패!");
+        } finally {
+            setLoading(false);
         }
     };
+
     useEffect(() => {
-        getListData();
-        setTimeout(() => {
-            setLoading(true);
-        }, 800);
-    }, [keyword]);
+        if (inView && nextPage && keyword !== "") {
+            getList();
+        }
+    }, [inView, nextPage, keyword]);
+
     return (
         <>
             <MainHeader />
             <Wrapper>
                 <SearchInput />
                 <Container>
-                    <Result>
-                        "{keyword}" {listData.length}개
-                    </Result>
+                    <Result>"{keyword}" 검색결과</Result>
                     <Filter />
                 </Container>
                 <ItemContainer>
-                    {!isLoading
-                        ? listData.map((_, index) => (
-                              <ListSkeleton key={index} />
-                          ))
-                        : listData.map((item) => (
-                              <ListItem item={item} key={item.id} />
-                          ))}
+                    {isLoading ? (
+                        Array.from({ length: 3 }).map((_, index) => (
+                            <ListSkeleton key={index} />
+                        ))
+                    ) : list.length !== 0 ? (
+                        list.map((item, index) => (
+                            <ListItem item={item} key={index} />
+                        ))
+                    ) : (
+                        <EmptyItem />
+                    )}
+                    <div ref={inViewRef} />
                 </ItemContainer>
             </Wrapper>
         </>

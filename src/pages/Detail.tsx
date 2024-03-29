@@ -12,8 +12,8 @@ const Wrapper = styled.div`
     background-color: #ffffff;
 `;
 
-const ImageWrapper = styled.div<{ url: string }>`
-    background-image: url(${(props) => props.url});
+const ImageWrapper = styled.div<{ $url: string }>`
+    background-image: url(${(props) => props.$url});
     background-size: cover;
     background-position: center center;
     position: relative;
@@ -83,7 +83,7 @@ const Detail = () => {
         <>
             <DetailHeader />
             <Wrapper>
-                <ImageWrapper url={placeData[0]?.image}>
+                <ImageWrapper $url={placeData[0]?.image}>
                     <SliderCount>1 / 5</SliderCount>
                     <HeartIcon>
                         <img

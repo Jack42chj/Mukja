@@ -11,13 +11,14 @@ interface ListProps {
         like: number;
         review_cnt: number;
         image: string;
+        distance: string;
     };
 }
 
 const Box = styled.div`
     width: 100%;
     margin-top: 24px;
-    padding-bottom: 24px;
+    padding-bottom: 16px;
     border-bottom: 1px solid #d9d9d9;
 `;
 
@@ -35,8 +36,8 @@ const Wrapper = styled.div`
     }
 `;
 
-const ItemImage = styled.div<{ url: string }>`
-    background-image: url(${(props) => props.url});
+const ItemImage = styled.div<{ $url: string }>`
+    background-image: url(${(props) => props.$url});
     background-size: cover;
     background-position: center center;
     height: 180px;
@@ -78,9 +79,14 @@ const DescWrapper = styled.div`
 `;
 
 const Subtitle = styled.div`
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     &.sub {
         color: #696969;
+    }
+    svg {
+        height: 18px;
+        width: auto;
+        stroke: #ff005c;
     }
     display: flex;
     align-items: center;
@@ -113,7 +119,7 @@ const ListItem: React.FC<ListProps> = ({ item }) => {
                     navigate(`/detail/${item.id}`, { state: item.id })
                 }
             >
-                <ItemImage url={item.image}>
+                <ItemImage $url={item.image}>
                     <IconWrapper>
                         <img
                             alt="heart-icon"
@@ -144,6 +150,30 @@ const ListItem: React.FC<ListProps> = ({ item }) => {
                             width="auto"
                         />
                         <div>{item.like}</div>
+                    </Subtitle>
+                    <Subtitle>
+                        <div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                />
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                                />
+                            </svg>
+                        </div>
+                        현재 위치로부터 {item.distance}km
                     </Subtitle>
                     <DetailText>상세보기</DetailText>
                 </DescWrapper>

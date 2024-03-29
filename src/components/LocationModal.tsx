@@ -75,11 +75,11 @@ const LocationModal: React.FC<ModalProps> = ({ isOpen, closeModal }) => {
                         " " +
                         address.region_3depth_name;
                     setAddress(name);
+                    closeModal();
+                    location.reload();
                 }
             });
         });
-        closeModal();
-        location.reload();
     };
     return (
         <Wrapper

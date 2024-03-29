@@ -8,6 +8,7 @@ export interface ListProps {
     like: number;
     review_cnt: number;
     image: string;
+    distance: string;
 }
 
 //상세보기

@@ -1,5 +1,5 @@
 # MustGo
-> **서울에서 내 주변 찐 맛집 찾기**
+**서울에서 내 주변 찐 맛집 찾기**<br/>
 ![logo](https://github.com/Jack42chj/Mukja/assets/86552441/3dd58f46-c7f9-4131-9376-e3eb7200898e)
 ---
 
@@ -20,7 +20,7 @@ $ yan dev
 
 
 ## 🖥️ 서비스 소개(Introduction)
-> **서울에서 진짜 맛집이라고 소문난 "찐" 맛집을 소개하는 웹/앱 서비스입니다.**
+**서울에서 진짜 맛집이라고 소문난 "찐" 맛집을 소개하는 웹/앱 서비스입니다.**<br/>
 > ![sample](https://github.com/Jack42chj/Mukja/assets/86552441/bbb798f1-fe4c-43f2-9262-5a71dc18c949)
 ---
 

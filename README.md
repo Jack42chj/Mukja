@@ -1,6 +1,6 @@
 # MustGo
 > **서울에서 내 주변 찐 맛집 찾기**
-> ![logo](https://github.com/Jack42chj/Mukja/assets/86552441/56097a92-142d-448d-bf07-d505cb7b9028)
+![logo](https://github.com/Jack42chj/Mukja/assets/86552441/3dd58f46-c7f9-4131-9376-e3eb7200898e)
 ---
 
 

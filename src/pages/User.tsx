@@ -53,7 +53,7 @@ const AuthBtn = styled.div`
 `;
 
 const User = () => {
-    const [isLoggedIn, setLogggedIn] = useState(false);
+    const [isLoggedIn, setLogggedIn] = useState(true);
     return (
         <>
             <UserHeader />

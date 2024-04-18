@@ -9,7 +9,7 @@ import { supabase } from "../supabase/supabase";
 import { ListProps } from "../interface/item-interface";
 import ListSkeleton from "../components/ListSkeleton";
 import EmptyItem from "../components/EmptyItem";
-import { calculateRange, getDistance } from "../util/distance";
+import { getDistance } from "../util/distance";
 import { useInView } from "react-intersection-observer";
 import LocStore from "../zustand/store";
 
@@ -46,8 +46,6 @@ const SearchResult = () => {
     const [isLoading, setLoading] = useState(false);
     const [nextPage, setNextPage] = useState(true);
     const [list, setList] = useState<ListProps[]>([]);
-    const latRange = calculateRange(location[0]);
-    const lngRange = calculateRange(location[1]);
     const page = useRef(1);
 
     const getList = async () => {
@@ -62,13 +60,8 @@ const SearchResult = () => {
                     `name.ilike.%${keyword}%, tag.ilike.%${keyword}%, address.ilike.%${keyword}%`
                 )
                 .order("id")
-                .lte("lat", latRange.max)
-                .gte("lat", latRange.min)
-                .lte("lng", lngRange.max)
-                .gte("lng", lngRange.min)
                 .range((page.current - 1) * 3, page.current * 3 - 1);
             if (error) {
-                console.error(error);
                 return;
             }
             if (data) {

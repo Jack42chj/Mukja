@@ -85,6 +85,84 @@ $ yan dev
 
 ---
 
+## 📁 디렉토리 구조
+```bash
+├─ .eslintrc.cjs
+├─ .gitignore
+├─ index.html
+├─ package.json
+├─ public
+│  └─ svg
+│     ├─ 404.svg
+│     ├─ avatar.svg
+│     ├─ cancle.svg
+│     ├─ chat.svg
+│     ├─ chevron-down.svg
+│     ├─ chevron-left.svg
+│     ├─ empty-star.svg
+│     ├─ heart.svg
+│     ├─ home.svg
+│     ├─ locate.svg
+│     ├─ location.svg
+│     ├─ logo.svg
+│     ├─ mail.svg
+│     ├─ marker.svg
+│     ├─ red-heart.svg
+│     ├─ search.svg
+│     ├─ star.svg
+│     ├─ user.svg
+│     └─ white-heart.svg
+├─ README.md
+├─ src
+│  ├─ App.tsx
+│  ├─ assets
+│  │  └─ fonts
+│  │     ├─ font.css
+│  │     └─ Pretendard-Regular.woff
+│  ├─ components
+│  │  ├─ DetailInfo.tsx
+│  │  ├─ EmptyItem.tsx
+│  │  ├─ Filter.tsx
+│  │  ├─ Footer.tsx
+│  │  ├─ header
+│  │  │  ├─ DetailHeader.tsx
+│  │  │  ├─ MainHeader.tsx
+│  │  │  ├─ MapHeader.tsx
+│  │  │  ├─ SearchHeader.tsx
+│  │  │  └─ UserHeader.tsx
+│  │  ├─ KeywordTag.tsx
+│  │  ├─ ListItem.tsx
+│  │  ├─ ListSkeleton.tsx
+│  │  ├─ LocationModal.tsx
+│  │  ├─ SearchBox.tsx
+│  │  ├─ SearchInput.tsx
+│  │  ├─ StarList.tsx
+│  │  ├─ TabBar.tsx
+│  │  └─ UserItem.tsx
+│  ├─ interface
+│  │  └─ item-interface.ts
+│  ├─ main.tsx
+│  ├─ pages
+│  │  ├─ Detail.tsx
+│  │  ├─ Home.tsx
+│  │  ├─ MapSetting.tsx
+│  │  ├─ Search.tsx
+│  │  ├─ SearchResult.tsx
+│  │  └─ User.tsx
+│  ├─ supabase
+│  │  └─ supabase.ts
+│  ├─ util
+│  ├─ vite-env.d.ts
+│  └─ zustand
+│     └─ store.ts
+├─ tsconfig.json
+├─ tsconfig.node.json
+├─ vite.config.ts
+└─ yarn.lock
+
+```
+
+
 ## 🌟 주요 기능(Specification)
 
 #### 📌 GPS 좌표 관리(GPS)

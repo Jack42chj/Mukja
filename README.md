@@ -11,8 +11,8 @@
 
 ## ⚙️ 요구 사항(Requirements)
 
-> - Node.js 20.11.1
-> - yarn 1.22.21
+- Node.js 20.11.1
+- yarn 1.22.21
 
 
 ## 💡 실행 방법(Installation)
